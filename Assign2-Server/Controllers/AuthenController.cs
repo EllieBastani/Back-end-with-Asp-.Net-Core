@@ -125,12 +125,14 @@ namespace Assign2_Server.Controllers
                 return NotFound();
             }
             var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-            //if (!result.Succeeded) not working
-            if (result.ToString().Contains("Failed"))
+            if (result.Succeeded)
             {
-                BadRequest(result.ToString());
+                return Ok();
             }
-                return Ok(result.ToString());
+            else
+            {
+                return BadRequest(result.ToString());
+            }
         }
 
 
